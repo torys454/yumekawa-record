@@ -7,17 +7,64 @@
   <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
+      /* うさぎ（デフォルト） */
       --pink-light: #ffeef8;
       --pink-main: #ffb6d9;
       --pink-dark: #ff8ac4;
       --lavender: #e8d4f0;
       --lavender-dark: #c9a8d8;
-      --pearl: #f5f0ff;
-      --silver: #d4d4e8;
       --bg-dark: #1a1520;
-      --bg-card: rgba(255, 255, 255, 0.08);
+      --bg-mid: #2d1f3d;
       --text-light: #fff0f8;
       --text-muted: #c4b8cc;
+      --mascot-body: radial-gradient(ellipse at 30% 30%, #ffffff 0%, #f0e8f8 50%, #e8d8f0 100%);
+      --mascot-ear-inner: linear-gradient(180deg, var(--pink-main) 0%, var(--pink-light) 100%);
+      --mascot-shadow: rgba(255, 182, 217, 0.3);
+    }
+
+    .skin-sheep {
+      --pink-light: #fff8e8;
+      --pink-main: #f0d9a0;
+      --pink-dark: #d4b896;
+      --lavender: #f5e6c8;
+      --lavender-dark: #d9c4a0;
+      --bg-dark: #1a1815;
+      --bg-mid: #2d2820;
+      --text-light: #fff8e8;
+      --text-muted: #c4b8a0;
+      --mascot-body: radial-gradient(ellipse at 30% 30%, #fffef8 0%, #f5edd8 50%, #ebe0c8 100%);
+      --mascot-ear-inner: linear-gradient(180deg, #e8d0a0 0%, #fff8e8 100%);
+      --mascot-shadow: rgba(240, 217, 160, 0.3);
+    }
+
+    .skin-pegasus {
+      --pink-light: #e8f8ff;
+      --pink-main: #7dd3e8;
+      --pink-dark: #4db8d0;
+      --lavender: #c8e8f5;
+      --lavender-dark: #90c8d8;
+      --bg-dark: #101820;
+      --bg-mid: #1a2d3d;
+      --text-light: #e8f8ff;
+      --text-muted: #a0c4cc;
+      --mascot-body: radial-gradient(ellipse at 30% 30%, #ffffff 0%, #e0f4f8 50%, #c8e8f0 100%);
+      --mascot-ear-inner: linear-gradient(180deg, #7dd3e8 0%, #e8f8ff 100%);
+      --mascot-shadow: rgba(125, 211, 232, 0.3);
+    }
+
+    .skin-polarbear {
+      --pink-light: #f8e8e8;
+      --pink-main: #d4a0a8;
+      --pink-dark: #c08890;
+      --lavender: #e8d0d4;
+      --lavender-dark: #c4a0a8;
+      --bg-dark: #181518;
+      --bg-mid: #2d2028;
+      --text-light: #f8e8e8;
+      --text-muted: #c4a8b0;
+      --mascot-body: radial-gradient(ellipse at 30% 30%, #fffefa 0%, #f0e8e8 50%, #e8dce0 100%);
+      --mascot-ear-inner: linear-gradient(180deg, #d4a0a8 0%, #f8e8e8 100%);
+      --mascot-shadow: rgba(212, 160, 168, 0.3);
     }
 
     * {
@@ -28,11 +75,58 @@
 
     body {
       font-family: 'Zen Maru Gothic', sans-serif;
-      background: linear-gradient(180deg, #1a1520 0%, #2d1f3d 50%, #1a1520 100%);
+      background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-mid) 50%, var(--bg-dark) 100%);
       min-height: 100vh;
       color: var(--text-light);
       padding: 20px;
       padding-bottom: 100px;
+      transition: background 0.5s ease;
+    }
+
+    /* スキン切り替えボタン */
+    .skin-switcher {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .skin-btn {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .skin-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .skin-btn.active {
+      border-color: var(--pink-main);
+      box-shadow: 0 0 15px var(--mascot-shadow);
+    }
+
+    .skin-btn.rabbit {
+      background: linear-gradient(135deg, #ffb6d9, #e8d4f0);
+    }
+
+    .skin-btn.sheep {
+      background: linear-gradient(135deg, #f0d9a0, #f5e6c8);
+    }
+
+    .skin-btn.pegasus {
+      background: linear-gradient(135deg, #7dd3e8, #c8e8f5);
+    }
+
+    .skin-btn.polarbear {
+      background: linear-gradient(135deg, #d4a0a8, #e8d0d4);
     }
 
     /* 星の背景 */
@@ -89,24 +183,27 @@
     .mascot-body {
       width: 100px;
       height: 80px;
-      background: radial-gradient(ellipse at 30% 30%, #ffffff 0%, #f0e8f8 50%, #e8d8f0 100%);
+      background: var(--mascot-body);
       border-radius: 50px 50px 45px 45px;
       position: absolute;
       bottom: 0;
       left: 50%;
       transform: translateX(-50%);
       box-shadow: 
-        0 10px 30px rgba(255, 182, 217, 0.3),
+        0 10px 30px var(--mascot-shadow),
         inset 0 -10px 20px rgba(232, 212, 240, 0.5);
+      transition: all 0.5s ease;
     }
 
+    /* うさぎの耳 */
     .mascot-ear {
       width: 25px;
       height: 35px;
-      background: radial-gradient(ellipse at 50% 30%, #ffffff 0%, #f0e8f8 100%);
+      background: var(--mascot-body);
       border-radius: 50% 50% 45% 45%;
       position: absolute;
       top: 0;
+      transition: all 0.5s ease;
     }
 
     .mascot-ear.left {
@@ -122,12 +219,126 @@
     .mascot-ear-inner {
       width: 12px;
       height: 18px;
-      background: linear-gradient(180deg, var(--pink-main) 0%, var(--pink-light) 100%);
+      background: var(--mascot-ear-inner);
       border-radius: 50%;
       position: absolute;
       top: 8px;
       left: 50%;
       transform: translateX(-50%);
+      transition: all 0.5s ease;
+    }
+
+    /* ひつじ用：もこもこ頭 */
+    .sheep-fluff {
+      display: none;
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 40px;
+    }
+
+    .skin-sheep .sheep-fluff {
+      display: block;
+    }
+
+    .skin-sheep .mascot-ear {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      top: 15px;
+    }
+
+    .skin-sheep .mascot-ear.left {
+      left: 5px;
+    }
+
+    .skin-sheep .mascot-ear.right {
+      right: 5px;
+    }
+
+    .skin-sheep .mascot-ear-inner {
+      width: 10px;
+      height: 10px;
+      top: 5px;
+    }
+
+    .fluff-ball {
+      position: absolute;
+      background: var(--mascot-body);
+      border-radius: 50%;
+      box-shadow: 0 2px 10px var(--mascot-shadow);
+    }
+
+    /* ペガサス用：角と翼 */
+    .pegasus-horn {
+      display: none;
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-bottom: 30px solid var(--pink-main);
+    }
+
+    .skin-pegasus .pegasus-horn {
+      display: block;
+    }
+
+    .skin-pegasus .mascot-ear {
+      width: 15px;
+      height: 25px;
+      border-radius: 5px 20px 5px 5px;
+    }
+
+    .skin-pegasus .mascot-ear.left {
+      transform: rotate(-30deg);
+    }
+
+    .skin-pegasus .mascot-ear.right {
+      transform: rotate(30deg);
+    }
+
+    .pegasus-wing {
+      display: none;
+      position: absolute;
+      top: 25px;
+      width: 30px;
+      height: 40px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, var(--pink-light) 100%);
+      border-radius: 50% 50% 20% 20%;
+    }
+
+    .skin-pegasus .pegasus-wing {
+      display: block;
+    }
+
+    .pegasus-wing.left {
+      left: -20px;
+      transform: rotate(20deg);
+    }
+
+    .pegasus-wing.right {
+      right: -20px;
+      transform: rotate(-20deg);
+    }
+
+    /* シロクマ用：丸い耳 */
+    .skin-polarbear .mascot-ear {
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      top: 5px;
+    }
+
+    .skin-polarbear .mascot-ear-inner {
+      width: 15px;
+      height: 15px;
+      top: 5px;
     }
 
     .mascot-eyes {
@@ -160,6 +371,7 @@
       position: absolute;
       top: 45px;
       opacity: 0.6;
+      transition: all 0.5s ease;
     }
 
     .mascot-cheek.left { left: 22px; }
@@ -181,18 +393,20 @@
       font-size: 1.1rem;
       color: var(--pink-main);
       margin-top: 10px;
-      text-shadow: 0 0 20px rgba(255, 182, 217, 0.5);
+      text-shadow: 0 0 20px var(--mascot-shadow);
+      transition: all 0.5s ease;
     }
 
     /* カード */
     .card {
-      background: var(--bg-card);
+      background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(10px);
       border-radius: 25px;
       padding: 20px;
       margin-bottom: 15px;
-      border: 1px solid rgba(255, 182, 217, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      transition: all 0.5s ease;
     }
 
     .card-title {
@@ -202,6 +416,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      transition: all 0.5s ease;
     }
 
     .card-title::before {
@@ -233,6 +448,7 @@
       border-radius: 10px;
       outline: none;
       margin: 10px 0;
+      transition: all 0.5s ease;
     }
 
     .mood-slider::-webkit-slider-thumb {
@@ -243,8 +459,9 @@
       background: white;
       border-radius: 50%;
       cursor: pointer;
-      box-shadow: 0 4px 15px rgba(255, 182, 217, 0.5);
+      box-shadow: 0 4px 15px var(--mascot-shadow);
       border: 3px solid var(--pink-main);
+      transition: all 0.5s ease;
     }
 
     .mood-labels {
@@ -277,8 +494,8 @@
     }
 
     .number-input:focus {
-      background: rgba(255, 182, 217, 0.15);
-      box-shadow: 0 0 20px rgba(255, 182, 217, 0.3);
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 20px var(--mascot-shadow);
     }
 
     .unit {
@@ -286,7 +503,7 @@
       color: var(--lavender);
     }
 
-    /* 日記 */
+    /* テキストエリア */
     .diary-textarea {
       width: 100%;
       min-height: 100px;
@@ -294,7 +511,7 @@
       font-family: 'Zen Maru Gothic', sans-serif;
       font-size: 1rem;
       background: rgba(255, 255, 255, 0.08);
-      border: 2px solid rgba(255, 182, 217, 0.3);
+      border: 2px solid rgba(255, 255, 255, 0.2);
       border-radius: 15px;
       color: var(--text-light);
       outline: none;
@@ -304,11 +521,28 @@
 
     .diary-textarea:focus {
       border-color: var(--pink-main);
-      box-shadow: 0 0 20px rgba(255, 182, 217, 0.2);
+      box-shadow: 0 0 20px var(--mascot-shadow);
     }
 
     .diary-textarea::placeholder {
       color: var(--text-muted);
+    }
+
+    /* やり残しコーナー */
+    .leftover-card {
+      border: 2px dashed var(--lavender-dark);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .leftover-card .card-title::before {
+      content: '🌙';
+    }
+
+    .mic-hint {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 8px;
     }
 
     /* タグ */
@@ -321,7 +555,7 @@
 
     .tag {
       padding: 8px 15px;
-      background: rgba(255, 182, 217, 0.2);
+      background: rgba(255, 255, 255, 0.1);
       border: 1px solid var(--pink-main);
       border-radius: 20px;
       font-size: 0.85rem;
@@ -331,7 +565,7 @@
     }
 
     .tag:hover {
-      background: rgba(255, 182, 217, 0.3);
+      background: rgba(255, 255, 255, 0.2);
       transform: scale(1.05);
     }
 
@@ -353,7 +587,7 @@
       font-family: 'Zen Maru Gothic', sans-serif;
       font-size: 0.9rem;
       background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 182, 217, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 15px;
       color: var(--text-light);
       outline: none;
@@ -392,7 +626,7 @@
       border-radius: 25px;
       color: white;
       cursor: pointer;
-      box-shadow: 0 10px 30px rgba(255, 138, 196, 0.4);
+      box-shadow: 0 10px 30px var(--mascot-shadow);
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
@@ -400,7 +634,7 @@
 
     .save-btn:hover {
       transform: translateY(-3px);
-      box-shadow: 0 15px 40px rgba(255, 138, 196, 0.5);
+      box-shadow: 0 15px 40px var(--mascot-shadow);
     }
 
     .save-btn:active {
@@ -459,7 +693,7 @@
     .success-text {
       font-size: 1.5rem;
       color: var(--pink-main);
-      text-shadow: 0 0 30px rgba(255, 182, 217, 0.8);
+      text-shadow: 0 0 30px var(--mascot-shadow);
     }
 
     .success-sub {
@@ -514,7 +748,7 @@
     .settings-section {
       margin-top: 30px;
       padding-top: 20px;
-      border-top: 1px solid rgba(255, 182, 217, 0.2);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .settings-title {
@@ -530,7 +764,7 @@
       font-family: 'Zen Maru Gothic', sans-serif;
       font-size: 0.85rem;
       background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 182, 217, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 10px;
       color: var(--text-light);
       outline: none;
@@ -560,15 +794,38 @@
   <div class="stars" id="stars"></div>
 
   <div class="container">
+    <!-- スキン切り替え -->
+    <div class="skin-switcher">
+      <button class="skin-btn rabbit active" data-skin="rabbit" title="うさぎ">🐰</button>
+      <button class="skin-btn sheep" data-skin="sheep" title="ひつじ">🐑</button>
+      <button class="skin-btn pegasus" data-skin="pegasus" title="ペガサス">🦄</button>
+      <button class="skin-btn polarbear" data-skin="polarbear" title="シロクマ">🐻‍❄️</button>
+    </div>
+
     <!-- マスコット -->
     <div class="mascot-container">
       <div class="mascot">
+        <!-- ペガサスの角 -->
+        <div class="pegasus-horn"></div>
+        
+        <!-- ひつじのもこもこ -->
+        <div class="sheep-fluff">
+          <div class="fluff-ball" style="width: 25px; height: 25px; top: 10px; left: 5px;"></div>
+          <div class="fluff-ball" style="width: 30px; height: 28px; top: 5px; left: 25px;"></div>
+          <div class="fluff-ball" style="width: 25px; height: 25px; top: 10px; left: 50px;"></div>
+        </div>
+        
         <div class="mascot-ear left">
           <div class="mascot-ear-inner"></div>
         </div>
         <div class="mascot-ear right">
           <div class="mascot-ear-inner"></div>
         </div>
+        
+        <!-- ペガサスの翼 -->
+        <div class="pegasus-wing left"></div>
+        <div class="pegasus-wing right"></div>
+        
         <div class="mascot-body">
           <div class="mascot-eyes">
             <div class="mascot-eye"></div>
@@ -626,6 +883,13 @@
       <textarea class="diary-textarea" id="diaryInput" placeholder="今日あったことを書いてね..."></textarea>
     </div>
 
+    <!-- やり残しコーナー -->
+    <div class="card leftover-card">
+      <div class="card-title">やり残し・明日やること</div>
+      <textarea class="diary-textarea" id="leftoverInput" placeholder="頭の中を空っぽにしてぐっすり眠ろう..."></textarea>
+      <div class="mic-hint">💡 キーボードの🎤マイクで音声入力できるよ</div>
+    </div>
+
     <!-- タグ -->
     <div class="card">
       <div class="card-title">タグ</div>
@@ -651,13 +915,55 @@
   <div class="success-overlay" id="successOverlay">
     <div class="sparkles" id="sparkles"></div>
     <div class="success-content">
-      <div class="success-mascot">🐰✨</div>
+      <div class="success-mascot" id="successMascot">🐰✨</div>
       <div class="success-text">きろくできたよ！</div>
       <div class="success-sub">えらい！おやすみなさい ✧</div>
     </div>
   </div>
 
   <script>
+    // スキン管理
+    const skinEmojis = {
+      rabbit: '🐰✨',
+      sheep: '🐑✨',
+      pegasus: '🦄✨',
+      polarbear: '🐻‍❄️✨'
+    };
+
+    let currentSkin = localStorage.getItem('yumekawa_skin') || 'rabbit';
+
+    function setSkin(skin) {
+      currentSkin = skin;
+      localStorage.setItem('yumekawa_skin', skin);
+      
+      // bodyのクラスを更新
+      document.body.className = '';
+      if (skin !== 'rabbit') {
+        document.body.classList.add('skin-' + skin);
+      }
+      
+      // ボタンのactiveを更新
+      document.querySelectorAll('.skin-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.skin === skin) {
+          btn.classList.add('active');
+        }
+      });
+      
+      // 成功時の絵文字を更新
+      document.getElementById('successMascot').textContent = skinEmojis[skin];
+    }
+
+    // スキンボタンのイベント
+    document.querySelectorAll('.skin-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        setSkin(btn.dataset.skin);
+      });
+    });
+
+    // 保存されたスキンを適用
+    setSkin(currentSkin);
+
     // 星の生成
     function createStars() {
       const starsContainer = document.getElementById('stars');
@@ -790,7 +1096,6 @@
         sparkle.style.left = Math.random() * 100 + '%';
         sparkle.style.top = Math.random() * 100 + '%';
         sparkle.style.animationDelay = Math.random() * 0.5 + 's';
-        sparkle.style.color = ['#ffb6d9', '#e8d4f0', '#fff', '#ff8ac4'][Math.floor(Math.random() * 4)];
         container.appendChild(sparkle);
       }
     }
@@ -806,6 +1111,7 @@
         weight: document.getElementById('weightInput').value || '',
         steps: document.getElementById('stepsInput').value || '',
         diary: document.getElementById('diaryInput').value || '',
+        leftover: document.getElementById('leftoverInput').value || '',
         tags: selectedTags.join(', ')
       };
 
@@ -827,6 +1133,7 @@
         params.append('weight', data.weight);
         params.append('steps', data.steps);
         params.append('diary', data.diary);
+        params.append('leftover', data.leftover);
         params.append('tags', data.tags);
 
         // iframeを使った送信（CORSを回避）
@@ -883,6 +1190,7 @@
         document.getElementById('weightInput').value = '';
         document.getElementById('stepsInput').value = '';
         document.getElementById('diaryInput').value = '';
+        document.getElementById('leftoverInput').value = '';
         moodSlider.value = 5;
         moodValue.textContent = '5';
         selectedTags = [];
