@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>✧ 夜のリチュアル ✧</title>
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink-light: #ffeef8;
+      --pink-main: #ffb6d9;
+      --pink-dark: #ff8ac4;
+      --lavender: #e8d4f0;
+      --lavender-dark: #c9a8d8;
+      --pearl: #f5f0ff;
+      --silver: #d4d4e8;
+      --bg-dark: #1a1520;
+      --bg-card: rgba(255, 255, 255, 0.08);
+      --text-light: #fff0f8;
+      --text-muted: #c4b8cc;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Zen Maru Gothic', sans-serif;
+      background: linear-gradient(180deg, #1a1520 0%, #2d1f3d 50%, #1a1520 100%);
+      min-height: 100vh;
+      color: var(--text-light);
+      padding: 20px;
+      padding-bottom: 100px;
+    }
+
+    /* 星の背景 */
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 2s ease-in-out infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* モコモコマスコット */
+    .mascot-container {
+      text-align: center;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .mascot {
+      width: 120px;
+      height: 100px;
+      position: relative;
+      margin: 0 auto;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .mascot-body {
+      width: 100px;
+      height: 80px;
+      background: radial-gradient(ellipse at 30% 30%, #ffffff 0%, #f0e8f8 50%, #e8d8f0 100%);
+      border-radius: 50px 50px 45px 45px;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      box-shadow: 
+        0 10px 30px rgba(255, 182, 217, 0.3),
+        inset 0 -10px 20px rgba(232, 212, 240, 0.5);
+    }
+
+    .mascot-ear {
+      width: 25px;
+      height: 35px;
+      background: radial-gradient(ellipse at 50% 30%, #ffffff 0%, #f0e8f8 100%);
+      border-radius: 50% 50% 45% 45%;
+      position: absolute;
+      top: 0;
+    }
+
+    .mascot-ear.left {
+      left: 15px;
+      transform: rotate(-15deg);
+    }
+
+    .mascot-ear.right {
+      right: 15px;
+      transform: rotate(15deg);
+    }
+
+    .mascot-ear-inner {
+      width: 12px;
+      height: 18px;
+      background: linear-gradient(180deg, var(--pink-main) 0%, var(--pink-light) 100%);
+      border-radius: 50%;
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .mascot-eyes {
+      position: absolute;
+      top: 35px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 20px;
+    }
+
+    .mascot-eye {
+      width: 8px;
+      height: 12px;
+      background: #2d1f3d;
+      border-radius: 50%;
+      animation: blink 4s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+      0%, 90%, 100% { transform: scaleY(1); }
+      95% { transform: scaleY(0.1); }
+    }
+
+    .mascot-cheek {
+      width: 15px;
+      height: 10px;
+      background: var(--pink-main);
+      border-radius: 50%;
+      position: absolute;
+      top: 45px;
+      opacity: 0.6;
+    }
+
+    .mascot-cheek.left { left: 22px; }
+    .mascot-cheek.right { right: 22px; }
+
+    .mascot-mouth {
+      width: 8px;
+      height: 4px;
+      border: 2px solid #2d1f3d;
+      border-top: none;
+      border-radius: 0 0 10px 10px;
+      position: absolute;
+      top: 52px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .greeting {
+      font-size: 1.1rem;
+      color: var(--pink-main);
+      margin-top: 10px;
+      text-shadow: 0 0 20px rgba(255, 182, 217, 0.5);
+    }
+
+    /* カード */
+    .card {
+      background: var(--bg-card);
+      backdrop-filter: blur(10px);
+      border-radius: 25px;
+      padding: 20px;
+      margin-bottom: 15px;
+      border: 1px solid rgba(255, 182, 217, 0.2);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-title {
+      font-size: 0.9rem;
+      color: var(--lavender);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-title::before {
+      content: '✧';
+      color: var(--pink-main);
+    }
+
+    /* 気分スライダー */
+    .mood-container {
+      text-align: center;
+    }
+
+    .mood-value {
+      font-size: 3rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--pink-main), var(--lavender));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 10px;
+    }
+
+    .mood-slider {
+      width: 100%;
+      height: 12px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: linear-gradient(90deg, var(--lavender-dark), var(--pink-main), var(--pink-dark));
+      border-radius: 10px;
+      outline: none;
+      margin: 10px 0;
+    }
+
+    .mood-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 30px;
+      height: 30px;
+      background: white;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(255, 182, 217, 0.5);
+      border: 3px solid var(--pink-main);
+    }
+
+    .mood-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* 数値入力 */
+    .number-input-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .number-input {
+      width: 120px;
+      padding: 15px;
+      font-size: 1.5rem;
+      font-family: 'Zen Maru Gothic', sans-serif;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid var(--pink-main);
+      border-radius: 15px;
+      color: var(--text-light);
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .number-input:focus {
+      background: rgba(255, 182, 217, 0.15);
+      box-shadow: 0 0 20px rgba(255, 182, 217, 0.3);
+    }
+
+    .unit {
+      font-size: 1rem;
+      color: var(--lavender);
+    }
+
+    /* 日記 */
+    .diary-textarea {
+      width: 100%;
+      min-height: 100px;
+      padding: 15px;
+      font-family: 'Zen Maru Gothic', sans-serif;
+      font-size: 1rem;
+      background: rgba(255, 255, 255, 0.08);
+      border: 2px solid rgba(255, 182, 217, 0.3);
+      border-radius: 15px;
+      color: var(--text-light);
+      outline: none;
+      resize: vertical;
+      transition: all 0.3s ease;
+    }
+
+    .diary-textarea:focus {
+      border-color: var(--pink-main);
+      box-shadow: 0 0 20px rgba(255, 182, 217, 0.2);
+    }
+
+    .diary-textarea::placeholder {
+      color: var(--text-muted);
+    }
+
+    /* タグ */
+    .tags-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .tag {
+      padding: 8px 15px;
+      background: rgba(255, 182, 217, 0.2);
+      border: 1px solid var(--pink-main);
+      border-radius: 20px;
+      font-size: 0.85rem;
+      color: var(--pink-light);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .tag:hover {
+      background: rgba(255, 182, 217, 0.3);
+      transform: scale(1.05);
+    }
+
+    .tag.selected {
+      background: var(--pink-main);
+      color: var(--bg-dark);
+      font-weight: 500;
+    }
+
+    .tag-input-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .tag-input {
+      flex: 1;
+      padding: 10px 15px;
+      font-family: 'Zen Maru Gothic', sans-serif;
+      font-size: 0.9rem;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 182, 217, 0.3);
+      border-radius: 15px;
+      color: var(--text-light);
+      outline: none;
+    }
+
+    .tag-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .add-tag-btn {
+      padding: 10px 20px;
+      background: var(--lavender-dark);
+      border: none;
+      border-radius: 15px;
+      color: var(--bg-dark);
+      font-family: 'Zen Maru Gothic', sans-serif;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .add-tag-btn:hover {
+      background: var(--lavender);
+      transform: scale(1.05);
+    }
+
+    /* 保存ボタン */
+    .save-btn {
+      width: 100%;
+      padding: 18px;
+      font-family: 'Zen Maru Gothic', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--pink-main), var(--pink-dark));
+      border: none;
+      border-radius: 25px;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(255, 138, 196, 0.4);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .save-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(255, 138, 196, 0.5);
+    }
+
+    .save-btn:active {
+      transform: translateY(0);
+    }
+
+    .save-btn::after {
+      content: '✧ きろくする ✧';
+    }
+
+    /* 成功演出 */
+    .success-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(26, 21, 32, 0.9);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .success-overlay.show {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .success-content {
+      text-align: center;
+      animation: popIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .success-mascot {
+      font-size: 5rem;
+      margin-bottom: 20px;
+      animation: bounce 0.6s ease infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .success-text {
+      font-size: 1.5rem;
+      color: var(--pink-main);
+      text-shadow: 0 0 30px rgba(255, 182, 217, 0.8);
+    }
+
+    .success-sub {
+      font-size: 1rem;
+      color: var(--lavender);
+      margin-top: 10px;
+    }
+
+    .sparkles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .sparkle {
+      position: absolute;
+      font-size: 2rem;
+      animation: sparkle 1s ease forwards;
+    }
+
+    @keyframes sparkle {
+      0% { transform: scale(0) rotate(0deg); opacity: 1; }
+      100% { transform: scale(1.5) rotate(180deg); opacity: 0; }
+    }
+
+    /* 日付表示 */
+    .date-display {
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--lavender);
+      margin-bottom: 20px;
+    }
+
+    /* エラーメッセージ */
+    .error-msg {
+      background: rgba(255, 100, 100, 0.2);
+      border: 1px solid rgba(255, 100, 100, 0.5);
+      border-radius: 10px;
+      padding: 10px 15px;
+      margin-bottom: 15px;
+      font-size: 0.85rem;
+      color: #ffb0b0;
+      display: none;
+    }
+
+    .error-msg.show {
+      display: block;
+    }
+
+    /* 設定セクション */
+    .settings-section {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 182, 217, 0.2);
+    }
+
+    .settings-title {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .gas-url-input {
+      width: 100%;
+      padding: 12px 15px;
+      font-family: 'Zen Maru Gothic', sans-serif;
+      font-size: 0.85rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 182, 217, 0.2);
+      border-radius: 10px;
+      color: var(--text-light);
+      outline: none;
+    }
+
+    .gas-url-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .gas-status {
+      margin-top: 10px;
+      font-size: 0.8rem;
+      text-align: center;
+    }
+
+    .gas-status.connected {
+      color: #90EE90;
+    }
+
+    .gas-status.not-connected {
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  <!-- 星の背景 -->
+  <div class="stars" id="stars"></div>
+
+  <div class="container">
+    <!-- マスコット -->
+    <div class="mascot-container">
+      <div class="mascot">
+        <div class="mascot-ear left">
+          <div class="mascot-ear-inner"></div>
+        </div>
+        <div class="mascot-ear right">
+          <div class="mascot-ear-inner"></div>
+        </div>
+        <div class="mascot-body">
+          <div class="mascot-eyes">
+            <div class="mascot-eye"></div>
+            <div class="mascot-eye"></div>
+          </div>
+          <div class="mascot-cheek left"></div>
+          <div class="mascot-cheek right"></div>
+          <div class="mascot-mouth"></div>
+        </div>
+      </div>
+      <p class="greeting" id="greeting">おつかれさま ✧</p>
+    </div>
+
+    <!-- 日付 -->
+    <div class="date-display" id="dateDisplay"></div>
+
+    <!-- エラーメッセージ -->
+    <div class="error-msg" id="errorMsg"></div>
+
+    <!-- 気分 -->
+    <div class="card">
+      <div class="card-title">きょうの気分</div>
+      <div class="mood-container">
+        <div class="mood-value" id="moodValue">5</div>
+        <input type="range" class="mood-slider" id="moodSlider" min="1" max="10" value="5">
+        <div class="mood-labels">
+          <span>😢</span>
+          <span>😐</span>
+          <span>😊</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 体重 -->
+    <div class="card">
+      <div class="card-title">体重</div>
+      <div class="number-input-container">
+        <input type="number" class="number-input" id="weightInput" placeholder="00.0" step="0.1">
+        <span class="unit">kg</span>
+      </div>
+    </div>
+
+    <!-- 歩数 -->
+    <div class="card">
+      <div class="card-title">歩数</div>
+      <div class="number-input-container">
+        <input type="number" class="number-input" id="stepsInput" placeholder="0" step="1">
+        <span class="unit">歩</span>
+      </div>
+    </div>
+
+    <!-- 日記 -->
+    <div class="card">
+      <div class="card-title">ひとこと日記</div>
+      <textarea class="diary-textarea" id="diaryInput" placeholder="今日あったことを書いてね..."></textarea>
+    </div>
+
+    <!-- タグ -->
+    <div class="card">
+      <div class="card-title">タグ</div>
+      <div class="tags-container" id="tagsContainer"></div>
+      <div class="tag-input-row">
+        <input type="text" class="tag-input" id="newTagInput" placeholder="新しいタグ...">
+        <button class="add-tag-btn" id="addTagBtn">追加</button>
+      </div>
+    </div>
+
+    <!-- 保存ボタン -->
+    <button class="save-btn" id="saveBtn"></button>
+
+    <!-- 設定 -->
+    <div class="settings-section">
+      <div class="settings-title">✧ Google Apps Script 設定 ✧</div>
+      <input type="text" class="gas-url-input" id="gasUrlInput" placeholder="GASのウェブアプリURLを貼り付け...">
+      <div class="gas-status not-connected" id="gasStatus">未接続</div>
+    </div>
+  </div>
+
+  <!-- 成功演出 -->
+  <div class="success-overlay" id="successOverlay">
+    <div class="sparkles" id="sparkles"></div>
+    <div class="success-content">
+      <div class="success-mascot">🐰✨</div>
+      <div class="success-text">きろくできたよ！</div>
+      <div class="success-sub">えらい！おやすみなさい ✧</div>
+    </div>
+  </div>
+
+  <script>
+    // 星の生成
+    function createStars() {
+      const starsContainer = document.getElementById('stars');
+      for (let i = 0; i < 50; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.width = (Math.random() * 3 + 1) + 'px';
+        star.style.height = star.style.width;
+        star.style.animationDelay = Math.random() * 2 + 's';
+        starsContainer.appendChild(star);
+      }
+    }
+    createStars();
+
+    // 日付表示
+    function updateDate() {
+      const now = new Date();
+      const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
+      document.getElementById('dateDisplay').textContent = now.toLocaleDateString('ja-JP', options);
+    }
+    updateDate();
+
+    // 挨拶
+    function updateGreeting() {
+      const hour = new Date().getHours();
+      const greetingEl = document.getElementById('greeting');
+      if (hour >= 5 && hour < 12) {
+        greetingEl.textContent = 'おはよう ✧';
+      } else if (hour >= 12 && hour < 18) {
+        greetingEl.textContent = 'こんにちは ✧';
+      } else {
+        greetingEl.textContent = 'おつかれさま ✧';
+      }
+    }
+    updateGreeting();
+
+    // 気分スライダー
+    const moodSlider = document.getElementById('moodSlider');
+    const moodValue = document.getElementById('moodValue');
+    moodSlider.addEventListener('input', () => {
+      moodValue.textContent = moodSlider.value;
+    });
+
+    // タグ管理
+    let availableTags = JSON.parse(localStorage.getItem('yumekawa_tags')) || ['#買った物', '#運動した', '#よく寝た', '#がんばった'];
+    let selectedTags = [];
+
+    function renderTags() {
+      const container = document.getElementById('tagsContainer');
+      container.innerHTML = '';
+      availableTags.forEach(tag => {
+        const tagEl = document.createElement('div');
+        tagEl.className = 'tag' + (selectedTags.includes(tag) ? ' selected' : '');
+        tagEl.textContent = tag;
+        tagEl.addEventListener('click', () => toggleTag(tag));
+        container.appendChild(tagEl);
+      });
+    }
+
+    function toggleTag(tag) {
+      if (selectedTags.includes(tag)) {
+        selectedTags = selectedTags.filter(t => t !== tag);
+      } else {
+        selectedTags.push(tag);
+      }
+      renderTags();
+    }
+
+    function addNewTag() {
+      const input = document.getElementById('newTagInput');
+      let newTag = input.value.trim();
+      if (!newTag) return;
+      
+      if (!newTag.startsWith('#')) {
+        newTag = '#' + newTag;
+      }
+      
+      if (!availableTags.includes(newTag)) {
+        availableTags.push(newTag);
+        localStorage.setItem('yumekawa_tags', JSON.stringify(availableTags));
+      }
+      
+      selectedTags.push(newTag);
+      input.value = '';
+      renderTags();
+    }
+
+    document.getElementById('addTagBtn').addEventListener('click', addNewTag);
+    document.getElementById('newTagInput').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') addNewTag();
+    });
+
+    renderTags();
+
+    // GAS URL管理
+    const gasUrlInput = document.getElementById('gasUrlInput');
+    const gasStatus = document.getElementById('gasStatus');
+    
+    const savedGasUrl = localStorage.getItem('yumekawa_gas_url');
+    if (savedGasUrl) {
+      gasUrlInput.value = savedGasUrl;
+      gasStatus.textContent = '接続済み ✓';
+      gasStatus.className = 'gas-status connected';
+    }
+
+    gasUrlInput.addEventListener('change', () => {
+      const url = gasUrlInput.value.trim();
+      if (url) {
+        localStorage.setItem('yumekawa_gas_url', url);
+        gasStatus.textContent = '接続済み ✓';
+        gasStatus.className = 'gas-status connected';
+      } else {
+        localStorage.removeItem('yumekawa_gas_url');
+        gasStatus.textContent = '未接続';
+        gasStatus.className = 'gas-status not-connected';
+      }
+    });
+
+    // スパークル演出
+    function createSparkles() {
+      const container = document.getElementById('sparkles');
+      container.innerHTML = '';
+      const emojis = ['✧', '✦', '⋆', '✩', '♡', '❀'];
+      for (let i = 0; i < 15; i++) {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        sparkle.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        sparkle.style.left = Math.random() * 100 + '%';
+        sparkle.style.top = Math.random() * 100 + '%';
+        sparkle.style.animationDelay = Math.random() * 0.5 + 's';
+        sparkle.style.color = ['#ffb6d9', '#e8d4f0', '#fff', '#ff8ac4'][Math.floor(Math.random() * 4)];
+        container.appendChild(sparkle);
+      }
+    }
+
+    // 保存処理
+    document.getElementById('saveBtn').addEventListener('click', async () => {
+      const gasUrl = localStorage.getItem('yumekawa_gas_url');
+      const errorMsg = document.getElementById('errorMsg');
+      
+      const data = {
+        date: new Date().toISOString(),
+        mood: moodSlider.value,
+        weight: document.getElementById('weightInput').value || '',
+        steps: document.getElementById('stepsInput').value || '',
+        diary: document.getElementById('diaryInput').value || '',
+        tags: selectedTags.join(', ')
+      };
+
+      if (!gasUrl) {
+        // GAS未設定の場合はローカル保存のみ
+        const localData = JSON.parse(localStorage.getItem('yumekawa_records') || '[]');
+        localData.push(data);
+        localStorage.setItem('yumekawa_records', JSON.stringify(localData));
+        
+        showSuccess();
+        return;
+      }
+
+      try {
+        // URLパラメータとして送信
+        const params = new URLSearchParams();
+        params.append('date', data.date);
+        params.append('mood', data.mood);
+        params.append('weight', data.weight);
+        params.append('steps', data.steps);
+        params.append('diary', data.diary);
+        params.append('tags', data.tags);
+
+        // iframeを使った送信（CORSを回避）
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.name = 'gas_iframe';
+        document.body.appendChild(iframe);
+
+        const form = document.createElement('form');
+        form.method = 'GET';
+        form.action = gasUrl;
+        form.target = 'gas_iframe';
+
+        for (const [key, value] of Object.entries(data)) {
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = key;
+          input.value = value;
+          form.appendChild(input);
+        }
+
+        document.body.appendChild(form);
+        form.submit();
+
+        // 少し待ってから成功とみなす
+        setTimeout(() => {
+          document.body.removeChild(form);
+          document.body.removeChild(iframe);
+          showSuccess();
+          
+          // ローカルにも保存
+          const localData = JSON.parse(localStorage.getItem('yumekawa_records') || '[]');
+          localData.push(data);
+          localStorage.setItem('yumekawa_records', JSON.stringify(localData));
+        }, 1500);
+        
+      } catch (error) {
+        errorMsg.textContent = '保存に失敗しました...もう一度試してね';
+        errorMsg.className = 'error-msg show';
+        setTimeout(() => {
+          errorMsg.className = 'error-msg';
+        }, 3000);
+      }
+    });
+
+    function showSuccess() {
+      const overlay = document.getElementById('successOverlay');
+      createSparkles();
+      overlay.className = 'success-overlay show';
+      
+      setTimeout(() => {
+        overlay.className = 'success-overlay';
+        // フォームリセット
+        document.getElementById('weightInput').value = '';
+        document.getElementById('stepsInput').value = '';
+        document.getElementById('diaryInput').value = '';
+        moodSlider.value = 5;
+        moodValue.textContent = '5';
+        selectedTags = [];
+        renderTags();
+      }, 2500);
+    }
+  </script>
+</body>
+</html>
